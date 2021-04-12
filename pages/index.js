@@ -1,38 +1,61 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import React from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/client";
+import { Input, Header } from "semantic-ui-react";
+import Layout from "../components/layout/layout";
+import { connect, useDispatch } from "react-redux";
+import { scrapeRecipe } from "./api/scraper";
 
-export default function Home() {
+function Home() {
+  const dispatch = useDispatch();
+
   const [session, loading] = useSession();
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+  const [url, setUrl] = React.useState();
 
-      <main className={styles.main}>
-        {!session && (
-          <>
-            Not signed in
-            <br />
-            <button onClick={signIn}>Sign in</button>
-          </>
-        )}
-        {session && (
-          <>
-            Signed in as {session.user.email}
-            <br />
-            <div>Now you can access the page</div>
-            <button>
-              <Link href="/secret"> To the secret page</Link>
-            </button>
-            <button onClick={signOut}>Sign out</button>
-          </>
-        )}
-      </main>
-    </div>
+  const handleClick = () => {
+    scrapeRecipe(url, dispatch);
+  };
+
+  const handleInputChange = (e) => {
+    setUrl(e.target.value);
+  };
+
+  return (
+    <Layout>
+      <Header inverted as="h1">
+        Your recipes in one place
+      </Header>
+      <p>
+        Cover is a one-page template for building simple and beautiful home
+        pages. Download, edit the text, and add your own fullscreen background
+        photo to make it your own.
+      </p>
+
+      <Input
+        placeholder="C+P Recipe url"
+        action={{
+          onClick: () => handleClick(),
+          color: "teal",
+          labelPosition: "right",
+          icon: "hand scissors outline",
+          content: "Scrape",
+          size: "huge",
+        }}
+        defaultValue={url}
+        onChange={handleInputChange}
+      />
+
+      <div id="load" visible="flase">
+        <div>G</div>
+        <div>N</div>
+        <div>I</div>
+        <div>D</div>
+        <div>A</div>
+        <div>O</div>
+        <div>L</div>
+      </div>
+    </Layout>
   );
 }
+
+export default connect()(Home);
