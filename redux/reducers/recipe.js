@@ -9,7 +9,6 @@ const recipe = (
   },
   action
 ) => {
-  console.log({ state });
   switch (action.type) {
     case t.SCRAPE_RECIPE_PENDING:
       return {
@@ -22,8 +21,8 @@ const recipe = (
       return {
         ...state,
         scraped: {
-          ...state.scraped,
-          [action.payload.url]: action.payload.recipe,
+          url: [action.payload.url],
+          recipe: action.payload.recipe,
         },
         isScraping: false,
       };

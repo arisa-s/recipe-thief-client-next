@@ -3,8 +3,9 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/client";
 import { Input, Header } from "semantic-ui-react";
 import Layout from "../components/layout/layout";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { scrapeRecipe } from "./api/scraper";
+import RecipeModal from "../components/recipeModal/recipeModal";
 
 function Home() {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ function Home() {
   const handleInputChange = (e) => {
     setUrl(e.target.value);
   };
+
+  const scraped = useSelector((state) => state.recipe.scraped);
 
   return (
     <Layout>
@@ -45,17 +48,8 @@ function Home() {
         onChange={handleInputChange}
       />
 
-      <div id="load" visible="flase">
-        <div>G</div>
-        <div>N</div>
-        <div>I</div>
-        <div>D</div>
-        <div>A</div>
-        <div>O</div>
-        <div>L</div>
-      </div>
+      <RecipeModal />
     </Layout>
   );
 }
-
 export default connect()(Home);

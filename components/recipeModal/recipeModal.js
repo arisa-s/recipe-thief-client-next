@@ -1,23 +1,33 @@
 import React from "react";
 import { Button, Icon, Image, Modal } from "semantic-ui-react";
+import { connect, useSelector } from "react-redux";
 
-export default RecipeModal = () => {
+const RecipeModal = () => {
+  const scraped = useSelector((state) => state.recipe.scraped);
+  console.log(scraped["recipe"]);
+
   const [open, setOpen] = React.useState(false);
 
+  const closeModal = () => {
+    setOpen(false);
+  };
+
+  React.useEffect(() => {
+    if (isScrapedEmpty(scraped)) {
+      setOpen(true);
+    }
+  }, [scraped, setOpen]);
+
+  const recipe = scraped["recipe"];
+
+  if (!recipe) {
+    return <></>;
+  }
   return (
-    <Modal
-      open={open}
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-      trigger={<Button>Scrolling Content Modal</Button>}
-    >
-      <Modal.Header>Profile Picture</Modal.Header>
+    <Modal open={open} onClose={() => closeModal()}>
+      <Modal.Header>{recipe.title}</Modal.Header>
       <Modal.Content image scrolling>
-        <Image
-          size="medium"
-          src="https://react.semantic-ui.com/images/wireframe/image.png"
-          wrapped
-        />
+        <Image size="medium" src={recipe.image} wrapped />
 
         <Modal.Description>
           <p>
@@ -64,3 +74,12 @@ export default RecipeModal = () => {
     </Modal>
   );
 };
+
+function isScrapedEmpty(object) {
+  if (JSON.stringify(object) == JSON.stringify({})) {
+    return false;
+  }
+  return true;
+}
+
+export default connect()(RecipeModal);
