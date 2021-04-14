@@ -2,7 +2,14 @@ import "../styles/globals.css";
 import "fomantic-ui-css/semantic.css";
 import React from "react";
 import { wrapper } from "../redux/store";
+import { Provider } from "next-auth/client";
 
-const MyApp = ({ Component, pageProps }) => <Component {...pageProps} />;
+function MyApp({ Component, pageProps }) {
+  return (
+    <Provider session={pageProps.session}>
+      <Component {...pageProps} />
+    </Provider>
+  );
+}
 
 export default wrapper.withRedux(MyApp);

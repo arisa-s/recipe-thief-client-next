@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Icon, Image, Modal } from "semantic-ui-react";
 import { connect, useSelector } from "react-redux";
+import { useSession, signIn, signOut } from "next-auth/client";
 
 const RecipeModal = () => {
   const scraped = useSelector((state) => state.recipe.scraped);
@@ -17,6 +18,7 @@ const RecipeModal = () => {
       setOpen(true);
     }
   }, [scraped, setOpen]);
+  const [session, loading] = useSession();
 
   const recipe = scraped["recipe"];
 
@@ -34,42 +36,19 @@ const RecipeModal = () => {
             This is an example of expanded content that will cause the modal's
             dimmer to scroll.
           </p>
-
-          <Image
-            src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            style={{ marginBottom: 10 }}
-          />
-          <Image
-            src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            style={{ marginBottom: 10 }}
-          />
-          <Image
-            src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            style={{ marginBottom: 10 }}
-          />
-          <Image
-            src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            style={{ marginBottom: 10 }}
-          />
-          <Image
-            src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            style={{ marginBottom: 10 }}
-          />
-          <Image
-            src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            style={{ marginBottom: 10 }}
-          />
-          <Image
-            src="https://react.semantic-ui.com/images/wireframe/paragraph.png"
-            style={{ marginBottom: 10 }}
-          />
-          <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
         </Modal.Description>
       </Modal.Content>
       <Modal.Actions>
-        <Button onClick={() => setOpen(false)} primary>
-          Proceed <Icon name="chevron right" />
-        </Button>
+        {!session && (
+          <>
+            <Button onClick={signIn}>Sign in to save</Button>
+          </>
+        )}
+        {session && (
+          <>
+            <Button onClick={signOut}>Save</Button>
+          </>
+        )}
       </Modal.Actions>
     </Modal>
   );
