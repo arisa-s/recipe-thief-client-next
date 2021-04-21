@@ -9,8 +9,8 @@ const options = {
     //   clientSecret: process.env.FACEBOOK_SECRET,
     // }),
     Providers.Google({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_ID,
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET,
     }),
     // Passwordless / email sign in
     // Providers.Email({
