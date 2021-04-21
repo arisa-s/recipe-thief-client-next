@@ -17,8 +17,6 @@ export const requestGetUser = (email) => {
 };
 
 export const getUser = async (email, dispatch) => {
-  // dispatch(setRecipeScraping);
-
   try {
     const user = await requestGetUser(email);
     dispatch(setCurrentUser(user));
