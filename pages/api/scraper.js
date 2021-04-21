@@ -4,7 +4,7 @@ import {
   setRecipeScrapeFailure,
 } from "../../redux/actions/recipe";
 
-const apiUrl = "http://localhost:5050/api/scraper";
+const apiUrl = "https://recipe-thief-server-flask.herokuapp.com/api/scraper";
 
 export const requestScrapeRecipe = (url) => {
   return fetch(`${apiUrl}`, {
