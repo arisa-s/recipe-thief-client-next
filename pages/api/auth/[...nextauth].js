@@ -13,17 +13,17 @@ const options = {
       clientSecret: process.env.GOOGLE_SECRET,
     }),
     // Passwordless / email sign in
-    Providers.Email({
-      server: {
-        host: process.env.MAIL_SERVER_HOST,
-        port: process.env.MAIL_SERVER_PORT,
-        auth: {
-          user: process.env.MAIL_SERVER_USER,
-          pass: process.env.MAIL_SERVER_PASSWORD,
-        },
-        from: process.env.MAIL_SERVER_FROM,
-      },
-    }),
+    // Providers.Email({
+    //   server: {
+    //     host: process.env.MAIL_SERVER_HOST,
+    //     port: process.env.MAIL_SERVER_PORT,
+    //     auth: {
+    //       user: process.env.MAIL_SERVER_USER,
+    //       pass: process.env.MAIL_SERVER_PASSWORD,
+    //     },
+    //     from: process.env.MAIL_SERVER_FROM,
+    //   },
+    // }),
     //   Providers.Auth0({
     //     clientId: process.env.AUTH0_CLIENT_ID,
     //     clientSecret: process.env.AUTH0_CLIENT_SECRET,
