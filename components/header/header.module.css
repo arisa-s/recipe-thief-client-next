@@ -1,0 +1,23 @@
+.menu {
+  height: 100vh;
+  background-color: #c7da99 !important;
+  font-family: "Open Sans", sans-serif;
+}
+
+.head {
+  background-color: #8d9c64 !important;
+}
+
+.logo {
+  color: white;
+  text-align: center;
+}
+
+.description {
+  color: #eff8ed;
+  text-align: center;
+}
+
+.item {
+  color: #4a5237 !important;
+}

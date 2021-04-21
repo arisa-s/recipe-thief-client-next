@@ -38,7 +38,7 @@ svg {
   display: block;
   width: 100%;
   height: 100vh;
-  background-image: url("../public/thief_green_7.png");
+  background-image: url("../public/thief_2.png");
 }
 svg .polymorph {
   fill: var(--main-color);
@@ -48,7 +48,6 @@ svg .polymorph {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
 }
 .container #content {
   transform: translateY(-50px);
@@ -72,7 +71,8 @@ svg .polymorph {
   transition: background 0.4s;
 }
 .container #content #close:hover {
-  background: rgba(#f2f2f2, 0.1);
+  background: var(--main-color);
+  color: white;
 }
 .container #content.active {
   z-index: 4;

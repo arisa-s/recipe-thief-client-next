@@ -16,3 +16,19 @@ export const setRecipeScrapeFailure = (error) => ({
   type: t.SCRAPE_RECIPE_FAILURE,
   error,
 });
+
+export const getRecipesPending = () => ({
+  type: t.GET_RECIPES_PENDING,
+});
+
+export const getRecipesSuccess = (recipes) => ({
+  type: t.GET_RECIPES_SUCCESS,
+  payload: {
+    recipes,
+  },
+});
+
+export const getRecipesFailure = (error) => ({
+  type: t.GET_RECIPES_FAILURE,
+  error,
+});

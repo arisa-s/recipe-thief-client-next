@@ -1,0 +1,27 @@
+.container {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  pdding-left: -20px;
+  background: rgba(212, 206, 191, 1) 74%; /* Old browsers */
+  background: -moz-linear-gradient(
+    -45deg,
+    rgba(251, 250, 246, 1) 9%,
+    rgba(212, 206, 191, 1) 74%,
+    rgba(212, 206, 191, 1) 74%,
+    rgba(212, 206, 191, 1) 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    -45deg,
+    rgba(251, 250, 246, 1) 9%,
+    rgba(212, 206, 191, 1) 74%,
+    rgba(212, 206, 191, 1) 74%,
+    rgba(212, 206, 191, 1) 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    135deg,
+    rgba(251, 250, 246, 1) 9%,
+    rgba(212, 206, 191, 1) 74%,
+    rgba(212, 206, 191, 1) 74%,
+    rgba(212, 206, 191, 1) 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
