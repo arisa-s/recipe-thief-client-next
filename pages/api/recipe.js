@@ -4,7 +4,7 @@ import {
   getRecipesFailure,
 } from "../../redux/actions/recipe";
 
-const apiUrl = "http://localhost:8080/api";
+const apiUrl = "https://recipe-thief-server.herokuapp.com/api";
 
 // GET RECIPES BY USER EMAIL
 export const requestGetRecipes = (userEmail) => {

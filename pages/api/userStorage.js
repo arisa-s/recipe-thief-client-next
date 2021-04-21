@@ -1,6 +1,6 @@
 import { setCurrentUser } from "../../redux/actions/user";
 
-const apiUrl = "http://localhost:8080/api";
+const apiUrl = "https://recipe-thief-server.herokuapp.com/api";
 
 // GET USER BY EMAIL
 export const requestGetUser = (email) => {
