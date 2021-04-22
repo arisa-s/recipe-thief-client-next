@@ -126,12 +126,10 @@ function Home() {
               Recipe Thief{" "}
             </Header>
             <h4 className="greentxt">
-              Step 1: Sign In
+              Sign in first, then copy and paste your favorite recipe page url in the input
+              below.
             </h4>
- <h4 className="greentxt">
-              Step 2: Copy and paste your favorite recipe page url in the input
-              below
-            </h4>
+ 
 
             <Input
               loading={!isScraping ? false : true}
