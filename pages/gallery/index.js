@@ -2,8 +2,10 @@ import React from "react";
 import { getRecipes } from "../api/recipe";
 import { connect, useDispatch, useSelector } from "react-redux";
 import RecipeCard from "../../components/recipe-card/recipe-card";
-import { Grid, Segment } from "semantic-ui-react";
+import { Grid, Icon, Container, Image } from "semantic-ui-react";
 import HomeLayoutProtected from "../../components/home-layout/home-layout";
+import styles from "./gallery.module.css";
+import Link from "next/link";
 
 function Gallery() {
   const user = useSelector((state) => state.user.currentUser);
@@ -20,14 +22,32 @@ function Gallery() {
       mobile={16}
       tablet={13}
       computer={13}
-      style={{ backgroundColor: "rgba(212, 206, 191, 1)", height: "100%" }}
+      className={styles.container}
     >
       <Grid columns={3} doubling stackable>
-        {recipes.map((recipe) => (
-          <Grid.Column centered>
-            <RecipeCard recipe={recipe} />
-          </Grid.Column>
-        ))}
+        {recipes.length && (
+          <>
+            {recipes.map((recipe) => (
+              <Grid.Column>
+                <RecipeCard recipe={recipe} />
+              </Grid.Column>
+            ))}
+          </>
+        )}
+        {!recipes.length && (
+          <Container verticalAlign="middle">
+            <Image
+              src="/cookbook.png"
+              centered="true"
+              size="medium"
+              verticalAlign="middle"
+            />
+            <h2 textAlign="center" className={styles.text}>
+              {" "}
+              There is nothing saved yet!
+            </h2>
+          </Container>
+        )}
       </Grid>
     </Grid.Column>
   );

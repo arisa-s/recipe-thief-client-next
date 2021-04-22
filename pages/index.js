@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/client";
 import {
@@ -12,6 +12,7 @@ import {
   Grid,
   Menu,
   Container,
+  Divider,
 } from "semantic-ui-react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { scrapeRecipe } from "./api/scraper";
@@ -19,6 +20,7 @@ import anime from "animejs";
 import Head from "next/head";
 import { createRecipe } from "./api/recipe";
 import Rating from "@material-ui/lab/Rating";
+import { resetRecipe } from "../redux/actions/recipe";
 
 function Home() {
   const dispatch = useDispatch();
@@ -31,15 +33,7 @@ function Home() {
     setUrl(e.target.value);
   };
   const handleClick = () => {
-    scrapeRecipe(url, dispatch).then(() => {
-      if (!isScraping && !scrapeError) {
-        setFlipped(true);
-        anime({
-          ...common,
-          points: [{ value: "215,110 0,110 186,86 215,0" }],
-        });
-      }
-    });
+    scrapeRecipe(url, dispatch);
   };
 
   // Redux recipe
@@ -47,6 +41,18 @@ function Home() {
   const isScraping = useSelector((state) => state.recipe.isScraping);
   const scrapeError = useSelector((state) => state.recipe.scrapeError);
   const recipe = scraped;
+  //const [scrapeError, setScrapeError] = React.useState(false);
+
+  React.useEffect(() => {
+    if (scraped) {
+      setFlipped(true);
+
+      anime({
+        ...common,
+        points: [{ value: "215,110 0,110 186,86 215,0" }],
+      });
+    }
+  }, [scraped]);
 
   // Flipping animation
   const [flipped, setFlipped] = React.useState(false);
@@ -56,7 +62,8 @@ function Home() {
     duration: 600,
     loop: false,
   };
-
+  console.log(scraped);
+  console.log(scrapeError);
   // Rating
   const [rating, setRating] = React.useState(0);
 
@@ -96,17 +103,18 @@ function Home() {
           <div style={{ textAlign: "center" }}>
             <Image src="/logo_white_alt.png" size="small" centered />
 
-            <Header inverted as="h1">
+            <Header inverted="true" as="h1">
               Recipe Thief{" "}
             </Header>
-            <p>
-              bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh bruh
-              bruh bruh bruh bruh bruh
-            </p>
+            <h4 className="greentxt">
+              Step 1: Copy and paste your favorite recipe page url in the input
+              below.
+            </h4>
 
             <Input
-              {...(!isScraping ? "" : loading)}
-              fluid
+              loading={!isScraping ? false : true}
+              className={scrapeError ? "error" : ""}
+              fluid="true"
               id="cta"
               placeholder="C+P Recipe url"
               defaultValue={url}
@@ -116,6 +124,15 @@ function Home() {
                 onClick: () => handleClick(),
               }}
             />
+            {scrapeError && (
+              <>
+                <br />
+
+                <p className="redtxt2">
+                  erroorrr: plase make sure the url contains recipe
+                </p>
+              </>
+            )}
           </div>
         </div>
         <svg viewBox="0 0 215 110" preserveAspectRatio="none">
@@ -129,9 +146,27 @@ function Home() {
         ) : (
           <div class="container">
             <div id="content" className={flipped ? "active" : ""}>
-              <h1>{recipe.title}</h1>
-              <p>By {recipe.host}</p>
-              <Grid stackable columns={2} verticalAlign="middle">
+              <Icon
+                id="close"
+                style={{ float: "right" }}
+                circular
+                name="undo"
+                onClick={() => {
+                  setFlipped(false);
+                  anime({
+                    ...common,
+                    points: [{ value: "215,110 0,110 0,0 215,0" }],
+                  });
+                  dispatch(resetRecipe());
+                  setRating(0);
+                }}
+              />
+              <h1 style={{ textAlign: "center" }} className="redtxt">
+                {recipe.title}
+              </h1>
+              <p style={{ textAlign: "center" }}>By {recipe.host}</p>
+              <Image src={recipe.image} size="small" centered />
+              {/* <Grid stackable columns={2} verticalAlign="middle">
                 <Grid.Column width={7} textAlign="left">
                   <h3>Ingridients : </h3>
                   <List>
@@ -152,60 +187,51 @@ function Home() {
                     ))}
                   </List>
                 </Grid.Column>
-              </Grid>
+              </Grid> */}
 
               <br />
-              <p>
+              <p style={{ textAlign: "center" }} className="cntertxt">
                 <Icon name="time" /> {recipe.total_time} minutes{"   "}
                 <Icon name="food" />
                 {recipe.yields}
               </p>
 
-              <Rating
-                name="half-rating"
-                value={rating}
-                precision={0.5}
-                onChange={(event, newValue) => {
-                  setRating(newValue);
-                }}
-              />
+              <p style={{ textAlign: "center" }}>
+                <Divider />
+                <Rating
+                  name="half-rating"
+                  value={rating}
+                  precision={0.5}
+                  onChange={(event, newValue) => {
+                    setRating(newValue);
+                  }}
+                />
+              </p>
 
-              <br />
-
-              {!session && (
-                <Button id="close" onClick={signIn}>
-                  Sign in to save
-                </Button>
-              )}
-
-              {session && (
-                <>
-                  <Button
-                    id="close"
-                    onClick={() => {
-                      createRecipe(session.user.email, {
-                        ...recipe,
-                        rating,
-                      });
-                    }}
-                  >
-                    Save
+              <p style={{ textAlign: "center" }}>
+                {!session && (
+                  <Button id="close" onClick={signIn}>
+                    Sign in to save
                   </Button>
-                  <Button id="close">Edit</Button>
-                </>
-              )}
-              <Icon
-                id="close"
-                circular
-                name="undo"
-                onClick={() => {
-                  setFlipped(false);
-                  anime({
-                    ...common,
-                    points: [{ value: "215,110 0,110 0,0 215,0" }],
-                  });
-                }}
-              />
+                )}
+
+                {session && (
+                  <>
+                    <Button
+                      id="close"
+                      onClick={() => {
+                        createRecipe(session.user.email, {
+                          ...recipe,
+                          rating,
+                        });
+                      }}
+                    >
+                      Save
+                    </Button>
+                    <Button id="close">Edit</Button>
+                  </>
+                )}
+              </p>
             </div>
           </div>
         )}

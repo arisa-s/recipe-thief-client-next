@@ -35,6 +35,15 @@ const recipe = (
         isScraping: false,
         scrapeError: action.error,
       };
+
+    case t.SCRAPE_RECIPE_RESET:
+      return {
+        ...state,
+        isScraping: false,
+        scraped: null,
+        scrapeError: null,
+      };
+
     case t.GET_RECIPES_PENDING:
       return {
         ...state,

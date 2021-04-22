@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Dropdown, Icon, Input, Menu, Image } from "semantic-ui-react";
 import styles from "../header/header.module.css";
 import Link from "next/link";
+import { signOut } from "next-auth/client";
 
 const Header = () => {
   const [activeItem, setActiveItem] = React.useState("saved");
@@ -74,7 +75,7 @@ const Header = () => {
         </Menu.Item>
       </Link>
 
-      <Link href="/collections">
+      <Link href="/grocery">
         <Menu.Item
           name="saved"
           active={activeItem === "saved"}
@@ -102,6 +103,17 @@ const Header = () => {
           New Recipe
         </Menu.Item>
       </Link>
+      <Menu.Item
+        name="saved"
+        active={activeItem === "saved"}
+        onClick={() => {
+          signOut();
+        }}
+        className={styles.item}
+      >
+        <Icon name="log out" />
+        Sign out
+      </Menu.Item>
     </Menu>
   );
 };

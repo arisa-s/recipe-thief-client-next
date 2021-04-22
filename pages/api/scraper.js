@@ -23,13 +23,13 @@ export const requestScrapeRecipe = (url) => {
 };
 
 export const scrapeRecipe = async (url, dispatch) => {
-  dispatch(setRecipeScraping);
+  dispatch(setRecipeScraping());
 
   try {
     const scrapedRecipe = await requestScrapeRecipe(url);
-
     dispatch(setRecipeScrapeSuccess(scrapedRecipe, url));
   } catch {
     dispatch(setRecipeScrapeFailure("dang it"));
+    debugger;
   }
 };

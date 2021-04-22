@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import HomeLayoutProtected from "../../components/home-layout/home-layout";
 import ComingSoon from "../../components/coming-soon/coming-soon";
 
-function Collection() {
+function Grocery() {
   return <ComingSoon />;
 }
 
-Collection.Layout = HomeLayoutProtected;
+Grocery.Layout = HomeLayoutProtected;
 
-export default connect()(Collection);
+export default connect()(Grocery);

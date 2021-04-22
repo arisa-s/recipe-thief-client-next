@@ -1,21 +1,18 @@
 import Header from "../header/header";
 import { Grid } from "semantic-ui-react";
 import AuthOnly from "../../components/auth-only/auth-only";
-import { useSession } from "next-auth/client";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { setCurrentUser } from "../../redux/actions/user";
+import styles from "./layout.module.css";
 
 function HomeLayout({ children }) {
   return (
-    <Grid stackable verticalAlign="middle">
+    <Grid stackable="true">
       <Grid.Column
         only="tablet computer"
         width={3}
-        style={{ backgroundColor: "rgba(212, 206, 191, 1)" }}
+        className={styles.container}
       >
         <Header />
       </Grid.Column>
-
       {children}
     </Grid>
   );

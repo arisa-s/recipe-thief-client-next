@@ -17,6 +17,10 @@ export const setRecipeScrapeFailure = (error) => ({
   error,
 });
 
+export const resetRecipe = () => ({
+  type: t.SCRAPE_RECIPE_RESET,
+});
+
 export const getRecipesPending = () => ({
   type: t.GET_RECIPES_PENDING,
 });
