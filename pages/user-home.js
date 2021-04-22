@@ -1,11 +1,8 @@
-import React, { createRef } from "react";
-import Link from "next/link";
-import { useSession, signIn, signOut } from "next-auth/client";
-import { connect, useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSession } from "next-auth/client";
+import { connect } from "react-redux";
 import { Grid } from "semantic-ui-react";
 import AuthOnly from "./../components/auth-only/auth-only";
-import Gallery from "./../components/gallery/gallery";
-import Header from "./../components/header/header";
 
 const UserHome = () => {
   const [session, loading] = useSession();
