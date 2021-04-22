@@ -2,10 +2,9 @@ import React from "react";
 import { getRecipes } from "../api/recipe";
 import { connect, useDispatch, useSelector } from "react-redux";
 import RecipeCard from "../../components/recipe-card/recipe-card";
-import { Grid, Icon, Container, Image } from "semantic-ui-react";
+import { Grid, Container, Image } from "semantic-ui-react";
 import HomeLayoutProtected from "../../components/home-layout/home-layout";
 import styles from "./gallery.module.css";
-import Link from "next/link";
 
 function Gallery() {
   const user = useSelector((state) => state.user.currentUser);

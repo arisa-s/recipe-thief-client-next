@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/client";
 import {
@@ -7,15 +7,12 @@ import {
   Header,
   Image,
   Icon,
-  List,
-  Checkbox,
-  Grid,
   Menu,
   Container,
   Divider,
 } from "semantic-ui-react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { scrapeRecipe } from "./api/scraper";
+import { scrapeRecipe } from "../pages/api/scraper";
 import anime from "animejs";
 import Head from "next/head";
 import { createRecipe } from "./api/recipe";
