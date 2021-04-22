@@ -39,6 +39,16 @@ export const createRecipe = (userEmail, recipe) =>
     },
   }).then((response) => response.json());
 
+// GET RECIPE with RECIPE ID
+export const getRecipe = (recipeId) => {
+  return fetch(`${apiUrl}/recipes/${recipeId}`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((response) => response.json());
+};
+
 // GET INGRIDIENTS with RECIPE ID
 export const getIngridients = (recipeId) => {
   return fetch(`${apiUrl}/recipes/${recipeId}/ingridients`, {

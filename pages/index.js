@@ -18,6 +18,7 @@ import Head from "next/head";
 import { createRecipe } from "./api/recipe";
 import Rating from "@material-ui/lab/Rating";
 import { resetRecipe } from "../redux/actions/recipe";
+import Swal from "sweetalert2";
 
 function Home() {
   const dispatch = useDispatch();
@@ -61,8 +62,29 @@ function Home() {
   };
   console.log(scraped);
   console.log(scrapeError);
+
   // Rating
   const [rating, setRating] = React.useState(0);
+
+  // Save recipe
+  const saveRecipe = () => {
+    createRecipe(session.user.email, {
+      ...recipe,
+      rating,
+    }).then(
+      Swal.fire({
+        title: "Recipe Saved!",
+        text: "Go to home page to view the details!",
+        icon: "success",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      })
+    );
+  };
 
   return (
     <div>
@@ -163,28 +185,6 @@ function Home() {
               </h1>
               <p style={{ textAlign: "center" }}>By {recipe.host}</p>
               <Image src={recipe.image} size="small" centered />
-              {/* <Grid stackable columns={2} verticalAlign="middle">
-                <Grid.Column width={7} textAlign="left">
-                  <h3>Ingridients : </h3>
-                  <List>
-                    {recipe.ingredients.map((ingredient) => (
-                      <List.Item>
-                        <Checkbox label={ingredient} />
-                      </List.Item>
-                    ))}
-                  </List>
-                </Grid.Column>
-                <Grid.Column width={8} textAlign="left">
-                  <h3>Instructions : </h3>
-                  <List ordered>
-                    {recipe.instructions.map((instruction) => (
-                      <List.Item>
-                        <p style={{ color: "black" }}>{instruction}</p>
-                      </List.Item>
-                    ))}
-                  </List>
-                </Grid.Column>
-              </Grid> */}
 
               <br />
               <p style={{ textAlign: "center" }} className="cntertxt">
@@ -217,10 +217,7 @@ function Home() {
                     <Button
                       id="close"
                       onClick={() => {
-                        createRecipe(session.user.email, {
-                          ...recipe,
-                          rating,
-                        });
+                        saveRecipe();
                       }}
                     >
                       Save

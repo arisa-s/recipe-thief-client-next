@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Dropdown, Icon, Input, Menu, Image } from "semantic-ui-react";
+import React from "react";
+import { Icon, Input, Menu, Image, Container } from "semantic-ui-react";
 import styles from "../header/header.module.css";
 import Link from "next/link";
 import { signOut } from "next-auth/client";
@@ -12,16 +12,31 @@ const Header = () => {
         <Image
           src="/cute_chef.png"
           size="small"
-          centered
+          centered="true"
           verticalAlign="bottom"
+          className={styles.pd}
         />
         <h2 className={styles.logo}>RECIPE THIEF</h2>
         <h4 className={styles.description}>裏 MENU</h4>
       </Menu.Item>
 
       <Menu.Item className={styles.item}>
-        <Input placeholder="Search" />
+        <Input placeholder="Search (Coming Soon)" />
       </Menu.Item>
+      <Link href="/">
+        <Menu.Item
+          name="new"
+          active={activeItem === "new"}
+          onClick={() => {
+            setActiveItem("new");
+          }}
+          className={styles.item}
+          href="/"
+        >
+          <Icon name="add" />
+          New Recipe
+        </Menu.Item>
+      </Link>
       <Link href="/gallery">
         <Menu.Item
           name="saved"
@@ -89,20 +104,6 @@ const Header = () => {
         </Menu.Item>
       </Link>
 
-      <Link href="/">
-        <Menu.Item
-          name="new"
-          active={activeItem === "new"}
-          onClick={() => {
-            setActiveItem("new");
-          }}
-          className={styles.item}
-          href="/"
-        >
-          <Icon name="add" />
-          New Recipe
-        </Menu.Item>
-      </Link>
       <Menu.Item
         name="saved"
         active={activeItem === "saved"}

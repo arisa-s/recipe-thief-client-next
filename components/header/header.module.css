@@ -6,6 +6,7 @@
 
 .head {
   background-color: #8d9c64 !important;
+  text-align: middle;
 }
 
 .logo {
@@ -20,4 +21,8 @@
 
 .item {
   color: #4a5237 !important;
+}
+
+.pd {
+  padding-left: 10%;
 }

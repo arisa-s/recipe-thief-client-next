@@ -5,7 +5,7 @@ import styles from "./layout.module.css";
 
 function HomeLayout({ children }) {
   return (
-    <Grid stackable="true">
+    <Grid stackable="true" className={styles.container}>
       <Grid.Column
         only="tablet computer"
         width={3}

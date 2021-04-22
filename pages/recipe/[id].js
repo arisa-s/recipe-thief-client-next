@@ -2,50 +2,131 @@ import React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import HomeLayoutProtected from "../../components/home-layout/home-layout";
 import { useRouter } from "next/router";
-import { getInstructions, getIngridients } from "../api/recipe";
+import { getRecipe, getInstructions, getIngridients } from "../api/recipe";
 import styles from "./recipe.module.css";
-import { Grid, Segment, Menu } from "semantic-ui-react";
+import {
+  Grid,
+  Segment,
+  Menu,
+  Container,
+  List,
+  Checkbox,
+  Image,
+  Header,
+  Icon,
+  Divider,
+  Rating,
+} from "semantic-ui-react";
 import RecipeCard from "../../components/recipe-card/recipe-card";
 
 const Recipe = (props) => {
   const { ingredients, instructions, isLoading, user, recipe } = props;
+  const [activeItem, setActiveItem] = React.useState("Ingredients");
 
-  console.log(ingredients);
-  console.log(instructions);
+  console.log(recipe);
 
-  if (isLoading) {
+  if (isLoading || !recipe) {
     return <h1>Bruh</h1>;
   }
 
   return (
     <>
-      <Grid.Column width={4} centered stackable container>
-        <Segment>
-          <RecipeCard recipe={recipe} />
-        </Segment>
+      <Grid.Column width={4} className={styles.container}>
+        <Container verticalAlign="middle" className={styles.pd}>
+          <h1 style={{ textAlign: "center" }} className={styles.redtxt}>
+            {recipe.title}
+          </h1>
+          <p style={{ textAlign: "center" }} className={styles.redtxt2}>
+            By {recipe.host}
+          </p>
+          <Image src={recipe.image} size="small" centered />
+
+          <br />
+          <p style={{ textAlign: "center" }} className={styles.redtxt2}>
+            <Icon name="time" /> {recipe.times} minutes{"   "}
+            <Icon name="food" />
+            {recipe.portion}
+          </p>
+
+          <p style={{ textAlign: "center" }}>
+            <Rating
+              icon="star"
+              name="half-rating"
+              value={recipe.rating}
+              disabled="true"
+            />
+          </p>
+        </Container>
       </Grid.Column>
-      <Grid.Column width={8} centered stackable container>
-        <div>
-          <Menu pointing>
+      <Grid.Column width={8} className={styles.container}>
+        <Container verticalAlign="middle" fluid="true" className={styles.pd}>
+          <Menu
+            attached="top"
+            className={styles.menu}
+            pointing="true"
+            secondary="true"
+            inverted="true"
+          >
             <Menu.Item
-              name="Ingridients"
-              //  active={activeItem === "home"}
-              // onClick={this.handleItemClick}
+              name="Ingredients"
+              active={activeItem === "Ingredients"}
+              onClick={() => {
+                setActiveItem("Ingredients");
+              }}
             />
             <Menu.Item
-              name="Preparation"
-              //  active={activeItem === "messages"}
-              // onClick={this.handleItemClick}
+              name="Instruction"
+              active={activeItem === "Instruction"}
+              onClick={() => {
+                setActiveItem("Instruction");
+              }}
             />
             <Menu.Item
               name="Nutrients"
-              //  active={activeItem === "friends"}
-              // onClick={this.handleItemClick}
+              active={activeItem === "Nutrients"}
+              onClick={() => {
+                setActiveItem("Nutrients");
+              }}
             />
           </Menu>
 
-          <Segment></Segment>
-        </div>
+          {activeItem == "Ingredients" && (
+            <Segment attached="bottom" textAlign="left">
+              <List>
+                {ingredients.map((ingredient) => (
+                  <List.Item>
+                    <Checkbox label={ingredient.ingridient} />
+                  </List.Item>
+                ))}
+              </List>
+            </Segment>
+          )}
+          {activeItem == "Instruction" && (
+            <Segment attached="bottom" textAlign="left">
+              <List ordered="true">
+                {instructions.map((instruction) => (
+                  <List.Item>
+                    <p style={{ color: "black" }}>{instruction.instruction}</p>
+                  </List.Item>
+                ))}
+              </List>
+            </Segment>
+          )}
+          {activeItem == "Nutrients" && (
+            <Segment attached="bottom">
+              <Image
+                src="/cooking.png"
+                centered="true"
+                size="small"
+                verticalAlign="middle"
+              />
+              <h1 textAlign="center" className={styles.text}>
+                {" "}
+                Coming Soon!
+              </h1>
+            </Segment>
+          )}
+        </Container>
       </Grid.Column>
     </>
   );
@@ -58,29 +139,30 @@ const RecipeWrapper = () => {
 
   // TODO: store recipe with id as key?
   // const recipe = useSelector((state) => state.recipe.recipes[{id}]);
-  const recipe = {};
-
+  const [recipe, setRecipe] = React.useState();
   const [ingredients, setIngredients] = React.useState([]);
   const [instructions, setInstructions] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  console.log(id);
-
   React.useEffect(() => {
-    const getInstructionsAndIngredients = async () => {
+    const getRecipeInfo = async () => {
       setIsLoading(true);
-      const ingridientsResult = getIngridients(id);
+
+      const recipeResult = getRecipe(id);
+      const ingredientsResult = getIngridients(id);
       const instructionsResult = getInstructions(id);
 
-      await ingridientsResult;
-      await instructionsResult;
+      const resolvedRecipe = await recipeResult;
+      const resolvedIngredients = await ingredientsResult;
+      const resolvedInstructions = await instructionsResult;
 
-      setIngredients(ingridientsResult);
-      setInstructions(instructionsResult);
+      setRecipe(resolvedRecipe[0]);
+      setIngredients(resolvedIngredients);
+      setInstructions(resolvedInstructions);
       setIsLoading(false);
     };
 
-    getInstructionsAndIngredients();
+    getRecipeInfo();
   }, []);
 
   return (
