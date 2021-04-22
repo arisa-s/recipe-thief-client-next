@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import "fomantic-ui-css/semantic.css";
+import "semantic-ui-css/semantic.min.css";
 import React from "react";
 import { wrapper } from "../redux/store";
 import { Provider } from "next-auth/client";

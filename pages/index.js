@@ -10,6 +10,8 @@ import {
   List,
   Checkbox,
   Grid,
+  Menu,
+  Container,
 } from "semantic-ui-react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { scrapeRecipe } from "./api/scraper";
@@ -22,34 +24,29 @@ function Home() {
   const dispatch = useDispatch();
   const [session, loading] = useSession();
 
-  // Scraper Input
+  // Scrape Recipe
   const [url, setUrl] = React.useState();
-
-  // need to make it async
 
   const handleInputChange = (e) => {
     setUrl(e.target.value);
   };
   const handleClick = () => {
     scrapeRecipe(url, dispatch).then(() => {
-      setFlipped(true);
-      anime({
-        ...common,
-        points: [{ value: "215,110 0,110 186,86 215,0" }],
-      });
+      if (!isScraping && !scrapeError) {
+        setFlipped(true);
+        anime({
+          ...common,
+          points: [{ value: "215,110 0,110 186,86 215,0" }],
+        });
+      }
     });
   };
-
-  // Rating
-  const [rating, setRating] = React.useState(0);
 
   // Redux recipe
   const scraped = useSelector((state) => state.recipe.scraped);
   const isScraping = useSelector((state) => state.recipe.isScraping);
   const scrapeError = useSelector((state) => state.recipe.scrapeError);
   const recipe = scraped;
-
-  console.log(recipe);
 
   // Flipping animation
   const [flipped, setFlipped] = React.useState(false);
@@ -60,6 +57,9 @@ function Home() {
     loop: false,
   };
 
+  // Rating
+  const [rating, setRating] = React.useState(0);
+
   return (
     <div>
       <Head>
@@ -68,19 +68,31 @@ function Home() {
       </Head>
 
       <section id="my-section">
+        <div className="wrapper">
+          <Container as="nav">
+            <Menu borderless compact inverted>
+              {session && (
+                <>
+                  <Menu.Item active>Scraper</Menu.Item>
+                  <Link href="/gallery">
+                    <Menu.Item className="menuitem">Home</Menu.Item>
+                  </Link>
+                  <Menu.Item className="menuitem" onClick={() => signOut()}>
+                    Sign out
+                  </Menu.Item>
+                </>
+              )}
+              {!session && (
+                <>
+                  <Menu.Item active>Scraper</Menu.Item>
+                  <Menu.Item onClick={() => signIn()}>Sign in</Menu.Item>
+                </>
+              )}
+            </Menu>
+          </Container>
+        </div>
+
         <div className={flipped ? "" : "active"} id="wrap-cta">
-          {session && (
-            <Link href="/user-home">
-              <h1 style={{ color: "white" }}>Home</h1>
-            </Link>
-          )}
-          {!session && (
-            <>
-              <h1 style={{ color: "white" }} onClick={signIn}>
-                Home
-              </h1>
-            </>
-          )}
           <div style={{ textAlign: "center" }}>
             <Image src="/logo_white_alt.png" size="small" centered />
 
@@ -141,12 +153,7 @@ function Home() {
                   </List>
                 </Grid.Column>
               </Grid>
-              {/* <Rating
-                  maxRating={5}
-                  defaultRating={3}
-                  icon="star"
-                  size="tiny"
-                /> */}
+
               <br />
               <p>
                 <Icon name="time" /> {recipe.total_time} minutes{"   "}

@@ -4,7 +4,8 @@ import HomeLayoutProtected from "../../components/home-layout/home-layout";
 import { useRouter } from "next/router";
 import { getInstructions, getIngridients } from "../api/recipe";
 import styles from "./recipe.module.css";
-import { Grid, Segment } from "semantic-ui-react";
+import { Grid, Segment, Menu } from "semantic-ui-react";
+import RecipeCard from "../../components/recipe-card/recipe-card";
 
 const Recipe = (props) => {
   const { ingredients, instructions, isLoading, user, recipe } = props;
@@ -17,55 +18,36 @@ const Recipe = (props) => {
   }
 
   return (
-    <Grid columns={2} stackable>
-      <Grid.Column width={3}></Grid.Column>
-      <Grid.Column width={10}>
-        <div className={styles.cont_modal}>
-          <div className={styles.cont_text_ingredients}>
-            <div className={styles.cont_over_hidden}>
-              <div className={styles.cont_tabs}>
-                <ul>
-                  <li>
-                    <a href="#">
-                      <h4>INGREDIENTS</h4>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <h4>PREPARATION</h4>
-                    </a>
-                  </li>
-                </ul>
-              </div>
+    <>
+      <Grid.Column width={4} centered stackable container>
+        <Segment>
+          <RecipeCard recipe={recipe} />
+        </Segment>
+      </Grid.Column>
+      <Grid.Column width={8} centered stackable container>
+        <div>
+          <Menu pointing>
+            <Menu.Item
+              name="Ingridients"
+              //  active={activeItem === "home"}
+              // onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="Preparation"
+              //  active={activeItem === "messages"}
+              // onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="Nutrients"
+              //  active={activeItem === "friends"}
+              // onClick={this.handleItemClick}
+            />
+          </Menu>
 
-              <div className={styles.cont_text_det_preparation}>
-                <div className={styles.cont_title_preparation}>
-                  <p>STEP 1</p>
-                </div>
-                <div className={styles.cont_info_preparation}>
-                  <p>Heat oven to 375 degress</p>
-                </div>
-                <div className={styles.cont_text_det_preparation}>
-                  <div className={styles.cont_title_preparation}>
-                    <p>STEP 2</p>
-                  </div>
-                  <div className={styles.cont_info_preparation}>
-                    <p>
-                      Heat oil in a large skillet over medium-low head. Add
-                      onion and bell papper. Cook gently until very soft, about
-                      20 minutes. Add garlic and cook until tender, 1 to 2
-                      minutes; stir in cumin, paprika and cook 1 minute. Pour in
-                      tomatoes and season with 3/4 teaspoon salt and 1/4
-                      teaspoon pepper;
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Segment></Segment>
         </div>
       </Grid.Column>
-    </Grid>
+    </>
   );
 };
 

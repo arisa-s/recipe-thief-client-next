@@ -1,12 +1,3 @@
-:root {
-  --main-color: #8d9c64;
-  --secondary-color: #a33c2c;
-}
-
-.menu {
-  background-color: #c7da99 !important;
-}
-
 #my-section {
   position: relative;
 }
@@ -82,41 +73,4 @@ svg .polymorph {
   z-index: 4;
   transform: translateY(0);
   opacity: 1;
-}
-
-.wrapper {
-  position: absolute;
-  top: 60px;
-  padding-left: 85%;
-}
-
-nav.ui.container .ui.header {
-  margin-top: 12px;
-}
-
-nav.ui.container .ui.inverted.compact.menu {
-  background-color: #8d9c64 !important;
-}
-
-nav.ui.container .ui.inverted.compact.menu .item {
-  font-size: 16px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-bottom: 14px;
-  margin-left: 16px;
-  margin-right: 16px;
-  border-radius: 0;
-}
-
-nav.ui.container .ui.inverted.compact.menu .active.item {
-  background-color: inherit;
-  border-bottom-color: white;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-}
-
-.menuitem:hover {
-  border-bottom-color: white;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
 }

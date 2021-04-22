@@ -7,7 +7,7 @@ import { setCurrentUser } from "../../redux/actions/user";
 
 function HomeLayout({ children }) {
   return (
-    <Grid columns={2}>
+    <Grid stackable verticalAlign="middle">
       <Grid.Column
         only="tablet computer"
         width={3}
@@ -16,14 +16,7 @@ function HomeLayout({ children }) {
         <Header />
       </Grid.Column>
 
-      <Grid.Column
-        mobile={16}
-        tablet={13}
-        computer={13}
-        style={{ backgroundColor: "rgba(212, 206, 191, 1)", height: "100%" }}
-      >
-        {children}
-      </Grid.Column>
+      {children}
     </Grid>
   );
 }

@@ -16,13 +16,20 @@ function Gallery() {
   console.log(recipes);
 
   return (
-    <Grid columns={3} doubling stackable>
-      {recipes.map((recipe) => (
-        <Grid.Column>
-          <RecipeCard recipe={recipe} />
-        </Grid.Column>
-      ))}
-    </Grid>
+    <Grid.Column
+      mobile={16}
+      tablet={13}
+      computer={13}
+      style={{ backgroundColor: "rgba(212, 206, 191, 1)", height: "100%" }}
+    >
+      <Grid columns={3} doubling stackable>
+        {recipes.map((recipe) => (
+          <Grid.Column centered>
+            <RecipeCard recipe={recipe} />
+          </Grid.Column>
+        ))}
+      </Grid>
+    </Grid.Column>
   );
 }
 
