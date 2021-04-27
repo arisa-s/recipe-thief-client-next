@@ -4,7 +4,6 @@ import { Card, Icon, Image } from "semantic-ui-react";
 import Link from "next/link";
 
 const RecipeCard = ({ recipe }) => {
-  console.log(recipe);
   //[clicked, setClicked];
   return (
     <Link href={`/recipe/${recipe.id}`}>

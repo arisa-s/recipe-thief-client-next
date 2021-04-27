@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./coming-soon.module.css";
-import { Grid, Header, Image, Container } from "semantic-ui-react";
+import { Grid, Image, Container } from "semantic-ui-react";
 
 function ComingSoon() {
   return (

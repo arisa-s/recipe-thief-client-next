@@ -8,13 +8,11 @@ import styles from "./gallery.module.css";
 
 function Gallery() {
   const user = useSelector((state) => state.user.currentUser);
-  console.log(user);
   const dispatch = useDispatch();
   React.useEffect(() => {
     getRecipes(user.email, dispatch);
   }, []);
   const recipes = useSelector((state) => state.recipe.saved);
-  console.log(recipes);
 
   return (
     <Grid.Column

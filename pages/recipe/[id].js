@@ -23,8 +23,6 @@ const Recipe = (props) => {
   const { ingredients, instructions, isLoading, user, recipe } = props;
   const [activeItem, setActiveItem] = React.useState("Ingredients");
 
-  console.log(recipe);
-
   if (isLoading || !recipe) {
     return <h1>Bruh</h1>;
   }

@@ -60,8 +60,6 @@ function Home() {
     duration: 600,
     loop: false,
   };
-  console.log(scraped);
-  console.log(scrapeError);
 
   // Rating
   const [rating, setRating] = React.useState(0);
@@ -126,10 +124,9 @@ function Home() {
               Recipe Thief{" "}
             </Header>
             <h4 className="greentxt">
-              Sign in first, then copy and paste your favorite recipe page url in the input
-              below.
+              Sign in first, then copy and paste your favorite recipe page url
+              in the input below.
             </h4>
- 
 
             <Input
               loading={!isScraping ? false : true}
