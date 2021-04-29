@@ -16,6 +16,7 @@
   left: 50%;
   transform: translate(0, -50%);
   opacity: 0;
+  text-align: center;
 }
 #wrap-cta.active {
   z-index: 2;

@@ -5,6 +5,7 @@ import RecipeCard from "../../components/recipe-card/recipe-card";
 import { Grid, Container, Image } from "semantic-ui-react";
 import HomeLayoutProtected from "../../components/home-layout/home-layout";
 import styles from "./gallery.module.css";
+import Link from "next/link";
 
 function Gallery() {
   const user = useSelector((state) => state.user.currentUser);
@@ -25,9 +26,11 @@ function Gallery() {
         {recipes.length && (
           <>
             {recipes.map((recipe) => (
-              <Grid.Column key={recipe.id}>
-                <RecipeCard recipe={recipe} />
-              </Grid.Column>
+              <Link href={`/recipe/${recipe.id}`}>
+                <Grid.Column key={recipe.id}>
+                  <RecipeCard recipe={recipe} />
+                </Grid.Column>
+              </Link>
             ))}
           </>
         )}

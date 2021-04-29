@@ -10,6 +10,7 @@ import {
   Container,
   Divider,
   Input,
+  Modal,
 } from "semantic-ui-react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { scrapeRecipe } from "../pages/api/scraper";
@@ -19,8 +20,9 @@ import { createRecipe } from "./api/recipe";
 import Rating from "@material-ui/lab/Rating";
 import { resetRecipe } from "../redux/actions/recipe";
 import Swal from "sweetalert2";
+import RecipeModalContent from "../components/recipe-modal/recipe-modal";
+import RecipeCard from "../components/recipe-card/recipe-card";
 
-// hello
 function Home() {
   const dispatch = useDispatch();
   const [session, loading] = useSession();
@@ -84,6 +86,9 @@ function Home() {
     );
   };
 
+  // Recipe detail modal
+  const [open, setOpen] = React.useState(false);
+
   return (
     <div>
       <Head>
@@ -120,39 +125,37 @@ function Home() {
           </Container>
         </div>
 
-        <Container textAlign="center">
-          <div id="wrap-cta" className={flipped ? "" : "active"}>
-            <Image src="/logo_white_alt.png" size="small" centered={true} />
-            <Header inverted={true} as="h1">
-              Recipe Thief{" "}
-            </Header>
-            <h4 className="greentxt">
-              Copy and paste your favorite recipe page url in the input below.
-            </h4>
-            <Input
-              loading={!isScraping ? false : true}
-              // className={scrapeError ? "error" : ""}
-              fluid={true}
-              id="cta"
-              placeholder="C+P Recipe url"
-              defaultValue={url}
-              onChange={handleInputChange}
-              icon={!isScraping ? "search" : "spinner"}
-              action={{
-                onClick: () => handleClick(),
-              }}
-            />
-            {scrapeError && (
-              <>
-                <br />
+        <div id="wrap-cta" className={flipped ? "" : "active"}>
+          <Image src="/logo_white_alt.png" size="small" centered={true} />
+          <Header inverted={true} as="h1">
+            Recipe Thief{" "}
+          </Header>
+          <h4 className="greentxt">
+            Copy and paste your favorite recipe page url in the input below.
+          </h4>
+          <Input
+            loading={!isScraping ? false : true}
+            // className={scrapeError ? "error" : ""}
+            fluid={true}
+            id="cta"
+            placeholder="C+P Recipe url"
+            defaultValue={url}
+            onChange={handleInputChange}
+            icon={!isScraping ? "search" : "spinner"}
+            action={{
+              onClick: () => handleClick(),
+            }}
+          />
+          {scrapeError && (
+            <>
+              <br />
 
-                <p className="redtxt2">
-                  error: plase make sure the url contains recipe
-                </p>
-              </>
-            )}
-          </div>
-        </Container>
+              <p className="redtxt2">
+                error: plase make sure the url contains recipe
+              </p>
+            </>
+          )}
+        </div>
         <svg viewBox="0 0 215 110" preserveAspectRatio="none">
           <polygon
             className="polymorph"
@@ -162,7 +165,7 @@ function Home() {
         {!recipe ? (
           <></>
         ) : (
-          <div class="container">
+          <div className="container">
             <div id="content" className={flipped ? "active" : ""}>
               <Icon
                 id="close"
@@ -190,19 +193,51 @@ function Home() {
                 {recipe.yields}
               </p>
 
-              <p>
-                <Divider />
-                <Rating
-                  name="half-rating"
-                  value={rating}
-                  precision={0.5}
-                  onChange={(event, newValue) => {
-                    setRating(newValue);
-                  }}
-                />
-              </p>
+              <Rating
+                name="half-rating"
+                value={rating}
+                precision={0.5}
+                onChange={(event, newValue) => {
+                  setRating(newValue);
+                }}
+              />
+              <Divider />
+              <div>
+                <Modal
+                  size="tiny"
+                  onClose={() => setOpen(false)}
+                  onOpen={() => setOpen(true)}
+                  open={open}
+                  trigger={<Button id="close">Detail</Button>}
+                >
+                  <RecipeModalContent recipe={recipe} />
+                  <Modal.Actions>
+                    <Button onClick={() => setOpen(false)}>Go back</Button>
+                    {!session && (
+                      <Button
+                        color="blue"
+                        onClick={() => {
+                          signIn({
+                            callbackUrl: "/gallery",
+                          });
+                        }}
+                      >
+                        Sign in to save
+                      </Button>
+                    )}
 
-              <p>
+                    {session && (
+                      <Button
+                        id="close"
+                        onClick={() => {
+                          saveRecipe();
+                        }}
+                      >
+                        Save
+                      </Button>
+                    )}
+                  </Modal.Actions>
+                </Modal>
                 {!session && (
                   <Button
                     id="close"
@@ -228,7 +263,7 @@ function Home() {
                     </Button>
                   </>
                 )}
-              </p>
+              </div>
             </div>
           </div>
         )}
