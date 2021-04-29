@@ -20,6 +20,7 @@ import Rating from "@material-ui/lab/Rating";
 import { resetRecipe } from "../redux/actions/recipe";
 import Swal from "sweetalert2";
 
+// Gallery
 function Home() {
   const dispatch = useDispatch();
   const [session, loading] = useSession();
