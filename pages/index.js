@@ -226,7 +226,6 @@ function Home() {
                     >
                       Save
                     </Button>
-                    <Button id="close">Edit</Button>
                   </>
                 )}
               </p>
