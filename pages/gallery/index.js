@@ -21,25 +21,25 @@ function Gallery() {
       computer={13}
       className={styles.container}
     >
-      <Grid columns={3} doubling stackable>
+      <Grid columns={3} doubling={true} stackable={true}>
         {recipes.length && (
           <>
             {recipes.map((recipe) => (
-              <Grid.Column>
+              <Grid.Column key={recipe.id}>
                 <RecipeCard recipe={recipe} />
               </Grid.Column>
             ))}
           </>
         )}
         {!recipes.length && (
-          <Container verticalAlign="middle">
+          <Container verticalalign="middle">
             <Image
               src="/cookbook.png"
-              centered="true"
+              centered={true}
               size="medium"
-              verticalAlign="middle"
+              verticalalign="middle"
             />
-            <h2 textAlign="center" className={styles.text}>
+            <h2 textalign="center" className={styles.text}>
               {" "}
               There is nothing saved yet!
             </h2>

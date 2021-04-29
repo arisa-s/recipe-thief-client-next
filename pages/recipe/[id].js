@@ -1,5 +1,5 @@
 import React from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import HomeLayoutProtected from "../../components/home-layout/home-layout";
 import { useRouter } from "next/router";
 import { getRecipe, getInstructions, getIngridients } from "../api/recipe";
@@ -12,13 +12,9 @@ import {
   List,
   Checkbox,
   Image,
-  Header,
   Icon,
-  Divider,
   Rating,
 } from "semantic-ui-react";
-import RecipeCard from "../../components/recipe-card/recipe-card";
-
 const Recipe = (props) => {
   const { ingredients, instructions, isLoading, user, recipe } = props;
   const [activeItem, setActiveItem] = React.useState("Ingredients");
@@ -30,40 +26,40 @@ const Recipe = (props) => {
   return (
     <>
       <Grid.Column width={4} className={styles.container}>
-        <Container verticalAlign="middle" className={styles.pd}>
-          <h1 style={{ textAlign: "center" }} className={styles.redtxt}>
+        <Container verticalalign="middle" className={styles.pd}>
+          <h1 style={{ textalign: "center" }} className={styles.redtxt}>
             {recipe.title}
           </h1>
-          <p style={{ textAlign: "center" }} className={styles.redtxt2}>
+          <p style={{ textalign: "center" }} className={styles.redtxt2}>
             By {recipe.host}
           </p>
           <Image src={recipe.image} size="small" centered />
 
           <br />
-          <p style={{ textAlign: "center" }} className={styles.redtxt2}>
+          <p style={{ textalign: "center" }} className={styles.redtxt2}>
             <Icon name="time" /> {recipe.times} minutes{"   "}
             <Icon name="food" />
             {recipe.portion}
           </p>
 
-          <p style={{ textAlign: "center" }}>
+          <div style={{ textalign: "center" }}>
             <Rating
               icon="star"
               name="half-rating"
               value={recipe.rating}
-              disabled="true"
+              disabled={true}
             />
-          </p>
+          </div>
         </Container>
       </Grid.Column>
       <Grid.Column width={8} className={styles.container}>
-        <Container verticalAlign="middle" fluid="true" className={styles.pd}>
+        <Container verticalalign="middle" fluid={true} className={styles.pd}>
           <Menu
             attached="top"
             className={styles.menu}
-            pointing="true"
-            secondary="true"
-            inverted="true"
+            pointing={true}
+            secondary={true}
+            inverted={true}
           >
             <Menu.Item
               name="Ingredients"
@@ -89,10 +85,10 @@ const Recipe = (props) => {
           </Menu>
 
           {activeItem == "Ingredients" && (
-            <Segment attached="bottom" textAlign="left">
+            <Segment attached="bottom" textalign="left">
               <List>
-                {ingredients.map((ingredient) => (
-                  <List.Item>
+                {ingredients.map((ingredient, idx) => (
+                  <List.Item key={idx}>
                     <Checkbox label={ingredient.ingridient} />
                   </List.Item>
                 ))}
@@ -100,10 +96,10 @@ const Recipe = (props) => {
             </Segment>
           )}
           {activeItem == "Instruction" && (
-            <Segment attached="bottom" textAlign="left">
-              <List ordered="true">
-                {instructions.map((instruction) => (
-                  <List.Item>
+            <Segment attached="bottom" textalign="left">
+              <List ordered={true}>
+                {instructions.map((instruction, idx) => (
+                  <List.Item key={idx}>
                     <p style={{ color: "black" }}>{instruction.instruction}</p>
                   </List.Item>
                 ))}
@@ -114,11 +110,11 @@ const Recipe = (props) => {
             <Segment attached="bottom">
               <Image
                 src="/cooking.png"
-                centered="true"
+                centered={true}
                 size="small"
-                verticalAlign="middle"
+                verticalalign="middle"
               />
-              <h1 textAlign="center" className={styles.text}>
+              <h1 textalign="center" className={styles.text}>
                 {" "}
                 Coming Soon!
               </h1>

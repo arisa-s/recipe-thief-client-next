@@ -42,7 +42,7 @@
 
 .error {
   background: #9c4b3e;
-  opacity: 50%;
+  opacity: 40%;
 }
 
 svg {
@@ -56,7 +56,8 @@ svg .polymorph {
 }
 .container {
   position: absolute;
-  top: 50%;
+  text-align: center;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -93,8 +94,8 @@ svg .polymorph {
 
 .wrapper {
   position: absolute;
-  top: 60px;
-  padding-left: 90%;
+  top: 70px;
+  padding-left: 100%;
 }
 
 nav.ui.container .ui.header {
@@ -102,6 +103,10 @@ nav.ui.container .ui.header {
 }
 
 nav.ui.container .ui.inverted.compact.menu {
+  background-color: #8d9c64 !important;
+}
+
+.menu {
   background-color: #8d9c64 !important;
 }
 
@@ -126,6 +131,7 @@ nav.ui.container .ui.inverted.compact.menu .active.item {
   border-bottom-color: white;
   border-bottom-style: solid;
   border-bottom-width: 2px;
+  background-color: transparent !important;
 }
 
 .redtxt {

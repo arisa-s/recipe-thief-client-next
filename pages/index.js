@@ -3,13 +3,13 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/client";
 import {
   Button,
-  Input,
   Header,
   Image,
   Icon,
   Menu,
   Container,
   Divider,
+  Input,
 } from "semantic-ui-react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { scrapeRecipe } from "../pages/api/scraper";
@@ -39,7 +39,6 @@ function Home() {
   const isScraping = useSelector((state) => state.recipe.isScraping);
   const scrapeError = useSelector((state) => state.recipe.scrapeError);
   const recipe = scraped;
-  //const [scrapeError, setScrapeError] = React.useState(false);
 
   React.useEffect(() => {
     if (scraped) {
@@ -93,45 +92,46 @@ function Home() {
 
       <section id="my-section">
         <div className="wrapper">
-          <Container as="nav">
-            <Menu borderless compact inverted>
-              {session && (
-                <>
-                  <Menu.Item active>Scraper</Menu.Item>
-                  <Link href="/gallery">
-                    <Menu.Item className="menuitem">Home</Menu.Item>
-                  </Link>
-                  <Menu.Item className="menuitem" onClick={() => signOut()}>
-                    Sign out
-                  </Menu.Item>
-                </>
-              )}
-              {!session && (
-                <>
-                  <Menu.Item active>Scraper</Menu.Item>
-                  <Menu.Item onClick={() => signIn()}>Sign in</Menu.Item>
-                </>
-              )}
-            </Menu>
+          <Container as="nav" textAlign="center">
+            {!flipped && (
+              <Menu borderless={true} compact={true} inverted={true}>
+                {session && (
+                  <>
+                    <Menu.Item active>Scraper</Menu.Item>
+                    <Link href="/gallery">
+                      <Menu.Item className="menuitem">Home</Menu.Item>
+                    </Link>
+                    <Menu.Item className="menuitem" onClick={() => signOut()}>
+                      Sign out
+                    </Menu.Item>
+                  </>
+                )}
+                {!session && (
+                  <>
+                    <Menu.Item active>Scraper</Menu.Item>
+                    <Menu.Item className="menuitem" onClick={signIn}>
+                      Sign in
+                    </Menu.Item>
+                  </>
+                )}
+              </Menu>
+            )}
           </Container>
         </div>
 
-        <div className={flipped ? "" : "active"} id="wrap-cta">
-          <div style={{ textAlign: "center" }}>
-            <Image src="/logo_white_alt.png" size="small" centered />
-
-            <Header inverted="true" as="h1">
+        <Container textAlign="center">
+          <div id="wrap-cta" className={flipped ? "" : "active"}>
+            <Image src="/logo_white_alt.png" size="small" centered={true} />
+            <Header inverted={true} as="h1">
               Recipe Thief{" "}
             </Header>
             <h4 className="greentxt">
-              Sign in first, then copy and paste your favorite recipe page url
-              in the input below.
+              Copy and paste your favorite recipe page url in the input below.
             </h4>
-
             <Input
               loading={!isScraping ? false : true}
-              className={scrapeError ? "error" : ""}
-              fluid="true"
+              // className={scrapeError ? "error" : ""}
+              fluid={true}
               id="cta"
               placeholder="C+P Recipe url"
               defaultValue={url}
@@ -146,12 +146,12 @@ function Home() {
                 <br />
 
                 <p className="redtxt2">
-                  erroorrr: plase make sure the url contains recipe
+                  error: plase make sure the url contains recipe
                 </p>
               </>
             )}
           </div>
-        </div>
+        </Container>
         <svg viewBox="0 0 215 110" preserveAspectRatio="none">
           <polygon
             className="polymorph"
@@ -178,20 +178,18 @@ function Home() {
                   setRating(0);
                 }}
               />
-              <h1 style={{ textAlign: "center" }} className="redtxt">
-                {recipe.title}
-              </h1>
-              <p style={{ textAlign: "center" }}>By {recipe.host}</p>
+              <h2 className="redtxt">{recipe.title}</h2>
+              <p>By {recipe.host}</p>
               <Image src={recipe.image} size="small" centered />
 
               <br />
-              <p style={{ textAlign: "center" }} className="cntertxt">
+              <p className="cntertxt">
                 <Icon name="time" /> {recipe.total_time} minutes{"   "}
                 <Icon name="food" />
                 {recipe.yields}
               </p>
 
-              <p style={{ textAlign: "center" }}>
+              <p>
                 <Divider />
                 <Rating
                   name="half-rating"
@@ -203,9 +201,16 @@ function Home() {
                 />
               </p>
 
-              <p style={{ textAlign: "center" }}>
+              <p>
                 {!session && (
-                  <Button id="close" onClick={signIn}>
+                  <Button
+                    id="close"
+                    onClick={() => {
+                      signIn({
+                        callbackUrl: "/gallery",
+                      });
+                    }}
+                  >
                     Sign in to save
                   </Button>
                 )}

@@ -10,14 +10,14 @@ function ComingSoon() {
       computer={13}
       className={styles.container}
     >
-      <Container verticalAlign="middle">
+      <Container verticalalign="middle">
         <Image
           src="/cooking.png"
-          centered="true"
+          centered={true}
           size="medium"
-          verticalAlign="middle"
+          verticalalign="middle"
         />
-        <h1 textAlign="center" className={styles.text}>
+        <h1 textalign="center" className={styles.text}>
           {" "}
           Coming Soon!
         </h1>
