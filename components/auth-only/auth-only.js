@@ -1,8 +1,10 @@
 import { useSession } from "next-auth/client";
 import React from "react";
 import Home from "./../../pages/index";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { setCurrentUser } from "../../redux/actions/user";
+import { Loader } from "semantic-ui-react";
+import styles from "./auth-only.module.css";
 
 const AuthOnly = (props) => {
   const { children } = props;
@@ -11,12 +13,14 @@ const AuthOnly = (props) => {
 
   if (loading) {
     return (
-      <div
-        style={{
-          fontSize: 200,
-        }}
-      >
-        Bruh
+      <div>
+        <Loader
+          active
+          inline="centered"
+          size="huge"
+          content="Loading..."
+          className={styles.loader}
+        />
       </div>
     );
   }

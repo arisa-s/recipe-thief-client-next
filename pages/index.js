@@ -21,7 +21,6 @@ import Rating from "@material-ui/lab/Rating";
 import { resetRecipe } from "../redux/actions/recipe";
 import Swal from "sweetalert2";
 import RecipeModalContent from "../components/recipe-modal/recipe-modal";
-import RecipeCard from "../components/recipe-card/recipe-card";
 
 function Home() {
   const dispatch = useDispatch();

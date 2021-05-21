@@ -14,6 +14,7 @@ import {
   Image,
   Icon,
   Rating,
+  Loader,
 } from "semantic-ui-react";
 
 const Recipe = (props) => {
@@ -21,7 +22,13 @@ const Recipe = (props) => {
   const [activeItem, setActiveItem] = React.useState("Ingredients");
 
   if (isLoading || !recipe) {
-    return <h1>Bruh</h1>;
+    return (
+      <Grid.Column width={12} className={styles.container}>
+        <Container verticalalign="middle" className={styles.pd}>
+          <Loader active inline="centered" size="huge" content="Loading..." />
+        </Container>
+      </Grid.Column>
+    );
   }
 
   return (

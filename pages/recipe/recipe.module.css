@@ -17,6 +17,18 @@
   color: #69342c;
 }
 
+.link {
+  color: #69342c;
+}
+
+.link:hover {
+  color: #995045;
+}
+
 .pd {
   padding-left: 10% !important;
+}
+
+.list {
+  text-align: left !important;
 }
