@@ -1,8 +1,4 @@
 /* -------- ----------- */
-.card {
-  top: 50%;
-  left: 80%;
-}
 
 .cont_photo {
   position: relative;
@@ -110,17 +106,32 @@
   font-size: 9px;
   font-weight: 700;
 }
-.cont_icon_right {
+.cont_icon_top {
   position: relative;
   float: right;
   margin-top: 16px;
-}
-.cont_icon_right > a {
-  margin: 16px;
-  margin-top: 16px;
-  color: #fff;
+  margin-right: 16px;
 }
 
+.cont_icon_bottom {
+  float: right;
+  position: absolute;
+  bottom: 270px;
+  right: 0;
+  margin-right: 16px;
+}
+
+.cont_icon_bottom:hover {
+  float: right;
+  position: absolute;
+  bottom: 270px;
+  right: 0;
+  margin-right: 16px;
+}
+
+.icon:hover {
+  color: #c8e280 !important;
+}
 .cont_detalles {
   position: absolute;
   bottom: -185px;

@@ -15,6 +15,7 @@ import {
   Icon,
   Rating,
 } from "semantic-ui-react";
+
 const Recipe = (props) => {
   const { ingredients, instructions, isLoading, user, recipe } = props;
   const [activeItem, setActiveItem] = React.useState("Ingredients");
@@ -31,7 +32,10 @@ const Recipe = (props) => {
             {recipe.title}
           </h1>
           <p style={{ textalign: "center" }} className={styles.redtxt2}>
-            By {recipe.host}
+            By{" "}
+            <a href={recipe.host} className={styles.link}>
+              {recipe.host}
+            </a>
           </p>
           <Image src={recipe.image} size="small" centered />
 
@@ -44,10 +48,10 @@ const Recipe = (props) => {
 
           <div style={{ textalign: "center" }}>
             <Rating
+              defaultRating={recipe.stars}
+              maxRating={5}
+              disabled
               icon="star"
-              name="half-rating"
-              value={recipe.rating}
-              disabled={true}
             />
           </div>
         </Container>
@@ -85,10 +89,10 @@ const Recipe = (props) => {
           </Menu>
 
           {activeItem == "Ingredients" && (
-            <Segment attached="bottom" textalign="left">
+            <Segment attached="bottom" className={styles.list}>
               <List>
                 {ingredients.map((ingredient, idx) => (
-                  <List.Item key={idx}>
+                  <List.Item key={idx} className={styles.list}>
                     <Checkbox label={ingredient.ingridient} />
                   </List.Item>
                 ))}
@@ -96,11 +100,11 @@ const Recipe = (props) => {
             </Segment>
           )}
           {activeItem == "Instruction" && (
-            <Segment attached="bottom" textalign="left">
+            <Segment attached="bottom" className={styles.list}>
               <List ordered={true}>
                 {instructions.map((instruction, idx) => (
                   <List.Item key={idx}>
-                    <p style={{ color: "black" }}>{instruction.instruction}</p>
+                    <p>{instruction.instruction}</p>
                   </List.Item>
                 ))}
               </List>
@@ -131,8 +135,6 @@ const RecipeWrapper = () => {
   const { id } = router.query;
   const user = useSelector((state) => state.user.currentUser);
 
-  // TODO: store recipe with id as key?
-  // const recipe = useSelector((state) => state.recipe.recipes[{id}]);
   const [recipe, setRecipe] = React.useState();
   const [ingredients, setIngredients] = React.useState([]);
   const [instructions, setInstructions] = React.useState([]);

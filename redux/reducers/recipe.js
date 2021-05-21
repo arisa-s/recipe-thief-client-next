@@ -64,6 +64,30 @@ const recipe = (
         isLoading: false,
         loadingError: action.error,
       };
+
+    case t.DELETE_RECIPE_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        scrapeError: null,
+      };
+
+    case t.DELETE_RECIPE_SUCCESS:
+      let id = action.payload.recipeId;
+      let recipes = state.saved.filter((recipe) => recipe.id !== id);
+      return {
+        ...state,
+        saved: recipes,
+        isLoading: false,
+      };
+
+    case t.DELETE_RECIPE_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        loadingError: action.error,
+      };
+
     default:
       return { ...state };
   }

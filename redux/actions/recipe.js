@@ -36,3 +36,19 @@ export const getRecipesFailure = (error) => ({
   type: t.GET_RECIPES_FAILURE,
   error,
 });
+
+export const deleteRecipePending = () => ({
+  type: t.DELETE_RECIPE_PENDING,
+});
+
+export const deleteRecipeSuccess = (recipeId) => ({
+  type: t.DELETE_RECIPE_SUCCESS,
+  payload: {
+    recipeId,
+  },
+});
+
+export const deleteRecipeFailure = (error) => ({
+  type: t.DELETE_RECIPE_FAILURE,
+  error,
+});

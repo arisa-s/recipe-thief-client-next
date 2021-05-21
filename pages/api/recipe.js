@@ -2,6 +2,9 @@ import {
   getRecipesPending,
   getRecipesSuccess,
   getRecipesFailure,
+  deleteRecipePending,
+  deleteRecipeSuccess,
+  deleteRecipeFailure,
 } from "../../redux/actions/recipe";
 
 const apiUrl = "https://recipe-thief-server.herokuapp.com/api";
@@ -26,6 +29,31 @@ export const getRecipes = async (userEmail, dispatch) => {
   } catch {
     dispatch(getRecipesFailure("dang it"));
   }
+};
+
+// DELETE RECIPE with RECIPE ID
+export const deleteRecipe = async (recipeId, dispatch) => {
+  dispatch(deleteRecipePending);
+  try {
+    await requestDeleteRecipe(recipeId);
+    dispatch(deleteRecipeSuccess(recipeId));
+  } catch {
+    dispatch(deleteRecipeFailure("dang it"));
+  }
+};
+
+export const requestDeleteRecipe = (recipeId) => {
+  console.log(recipeId);
+  return fetch(`${apiUrl}/recipes/${recipeId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    response.json();
+    console.log(response);
+  });
 };
 
 // CREATE (SAVE) RECIPE
