@@ -18,7 +18,6 @@ const RecipeCard = ({ recipe }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      console.log(recipe.id);
       if (result.isConfirmed) {
         deleteRecipe(recipe.id, dispatch);
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
@@ -28,37 +27,39 @@ const RecipeCard = ({ recipe }) => {
 
   return (
     <div className={styles.cont_photo}>
-      <Link href={`/recipe/${recipe.id}`} key={recipe.id}>
-        <>
-          <div className={styles.cont_img_back}>
-            <img src={recipe.image} alt="" />
-          </div>
-          <div className={styles.cont_mins}>
-            <div className={styles.sub_mins}>
-              <h3 style={{ paddingBottom: "10%" }}>{recipe.times}</h3>
-              <span>MINS</span>
-            </div>
-            <div className={styles.cont_icon_top}>
-              {" "}
-              <Icon
-                name="expand arrows alternate"
-                size="large"
-                inverted
-                className={styles.icon}
-              />
-            </div>
-          </div>
-          <div className={styles.cont_servings}>
-            <h3>{recipe.stars}</h3>
-            <span>STARS</span>
-          </div>
+      <div className={styles.cont_img_back}>
+        <Link href={`/recipe/${recipe.id}`} key={recipe.id}>
+          <img src={recipe.image} alt="" />
+        </Link>
+      </div>
+      <div className={styles.cont_mins}>
+        <div className={styles.sub_mins}>
+          <h3 style={{ paddingBottom: "10%" }}>{recipe.times}</h3>
+          <span>MINS</span>
+        </div>
+        <div className={styles.cont_icon_top}>
+          {" "}
+          <Link href={`/recipe/${recipe.id}`} key={recipe.id}>
+            <Icon
+              name="expand arrows alternate"
+              size="large"
+              inverted
+              className={styles.icon}
+            />
+          </Link>
+        </div>
+      </div>
+      <div className={styles.cont_servings}>
+        <h3>{recipe.stars}</h3>
+        <span>STARS</span>
+      </div>
 
-          <div className={styles.cont_detalles}>
-            <br />
-            <br />
-            <h3 style={{ color: "white" }}>{recipe.title}</h3>
-          </div>
-        </>
+      <Link href={`/recipe/${recipe.id}`} key={recipe.id}>
+        <div className={styles.cont_detalles}>
+          <br />
+          <br />
+          <h3 style={{ color: "white" }}>{recipe.title}</h3>
+        </div>
       </Link>
 
       <div className={styles.cont_icon_bottom}>
