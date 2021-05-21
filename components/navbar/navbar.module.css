@@ -19,8 +19,18 @@
   text-align: center;
 }
 
+.collection {
+  color: #4a5237 !important;
+  background-color: #c7da99 !important;
+}
+
 .item {
   color: #4a5237 !important;
+  background-color: #c7da99 !important;
+}
+
+.item:hover {
+  background-color: #a2b870 !important;
 }
 
 .pd {
