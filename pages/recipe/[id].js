@@ -1,7 +1,6 @@
 import React from "react";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import HomeLayoutProtected from "../../components/home-layout/home-layout";
-import { useRouter } from "next/router";
 import { getRecipe, getInstructions, getIngridients } from "../api/recipe";
 import styles from "./recipe.module.css";
 import {
@@ -17,11 +16,9 @@ import {
   Loader,
 } from "semantic-ui-react";
 
-const Recipe = (props) => {
-  const { ingredients, instructions, isLoading, user, recipe } = props;
+const Recipe = ({ recipe, ingredients, instructions }) => {
   const [activeItem, setActiveItem] = React.useState("Ingredients");
-
-  if (isLoading || !recipe) {
+  if (!recipe) {
     return (
       <Grid.Column width={12} className={styles.container}>
         <Container verticalalign="middle" className={styles.pd}>
@@ -137,48 +134,20 @@ const Recipe = (props) => {
   );
 };
 
-const RecipeWrapper = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  const user = useSelector((state) => state.user.currentUser);
+Recipe.Layout = HomeLayoutProtected;
+export default connect()(Recipe);
 
-  const [recipe, setRecipe] = React.useState();
-  const [ingredients, setIngredients] = React.useState([]);
-  const [instructions, setInstructions] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+export async function getServerSideProps(context) {
+  const recipeId = context.params.id;
+  const recipe = await getRecipe(recipeId);
+  const ingredients = await getIngridients(recipeId);
+  const instructions = await getInstructions(recipeId);
 
-  React.useEffect(() => {
-    const getRecipeInfo = async () => {
-      setIsLoading(true);
-
-      const recipeResult = getRecipe(id);
-      const ingredientsResult = getIngridients(id);
-      const instructionsResult = getInstructions(id);
-
-      const resolvedRecipe = await recipeResult;
-      const resolvedIngredients = await ingredientsResult;
-      const resolvedInstructions = await instructionsResult;
-
-      setRecipe(resolvedRecipe[0]);
-      setIngredients(resolvedIngredients);
-      setInstructions(resolvedInstructions);
-      setIsLoading(false);
-    };
-
-    getRecipeInfo();
-  }, []);
-
-  return (
-    <Recipe
-      ingredients={ingredients}
-      instructions={instructions}
-      isLoading={isLoading}
-      user={user}
-      recipe={recipe}
-    />
-  );
-};
-
-RecipeWrapper.Layout = HomeLayoutProtected;
-
-export default connect()(RecipeWrapper);
+  return {
+    props: {
+      recipe: recipe[0],
+      ingredients: ingredients,
+      instructions: instructions,
+    },
+  };
+}
